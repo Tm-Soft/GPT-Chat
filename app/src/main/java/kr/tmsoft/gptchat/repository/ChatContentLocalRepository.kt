@@ -13,9 +13,16 @@ class ChatContentLocalRepository(application: Application) {
 
     fun getWaitContentSingle(): Flow<ChatContent> = chatContentDao.getWaitContent()
 
-    fun getAssistantContent(chatRoomSrl: Long): List<ChatContent> {
-        return chatContentDao.getAssistantContents(chatRoomSrl)
-    }
+    fun getAssistantContent(
+        chatRoomSrl: Long,
+        chatContentSrl: Long
+    ) = chatContentDao.getAssistantContents(chatRoomSrl, chatContentSrl)
+
+    fun isChatContent(
+        chatRoomSrl: Long,
+        chatContentSrl: Long
+    ) = chatContentDao.isResponseChatContent(chatRoomSrl, chatContentSrl)
+
 
     fun insertContent(
         data: ChatContent

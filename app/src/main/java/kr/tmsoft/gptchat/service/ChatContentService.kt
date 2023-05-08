@@ -3,7 +3,6 @@ package kr.tmsoft.gptchat.service
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import android.widget.Toast
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -21,9 +20,16 @@ class ChatContentService : Service() {
     private var mChatContentLocalRepo: ChatContentLocalRepository? = null
     private var mChatContentRemoteRepo: ChatContentRemoteRepository? = null
 
+
+    //TODO
+    // 왜 최초 인스톨 할 때 Service 내 onCreate 등록한 로직이 두번 호출 되는가?
+    // Service -> 싱글톤 실행 만약 두 번 이상 실행시 onStartCommand 만 호출 되는데 왜 그럴까...
+    // 우선 Room 쿼리로 중복 되는 값이 저장 되지 않도록 해두었지만 완벽한 해결 방법은 아닌 것 같음.
+
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate() {
         super.onCreate()
+        Timber.e("서비스 로직 등록")
 
         mChatContentLocalRepo = ChatContentLocalRepository(application)
         mChatContentRemoteRepo = ChatContentRemoteRepository()
@@ -43,8 +49,10 @@ class ChatContentService : Service() {
                         )
                     )
 
-                    val beforeAssistant = mChatContentLocalRepo?.getAssistantContent(it.chatRoomSrl)
+                    Timber.e("list 데이터 요청 : ${it.chatContentSrl}")
+                    val beforeAssistant = mChatContentLocalRepo?.getAssistantContent(it.chatRoomSrl, it.chatContentSrl)
                     beforeAssistant?.forEach { before ->
+                        Timber.e("list 데이터 반환 : $before")
                         requestMessage.add(
                             OpenaiMessage(
                                 "assistant",
@@ -54,7 +62,7 @@ class ChatContentService : Service() {
                     }
 
                     requestMessage.add(
-                            OpenaiMessage(
+                        OpenaiMessage(
                             role = "user",
                             content = it.content
                         )
@@ -89,20 +97,22 @@ class ChatContentService : Service() {
                         )
 
                         // 반환 받은 Content :: Insert
-                        mChatContentLocalRepo?.insertContent(
-                            ChatContent(
-                                chatContentSrl = 0,
-                                chatRoomSrl = it.chatRoomSrl,
-                                responseChatContentSrl = response.chatContentSrl,
-                                role = "assistant",
-                                content = response.choices?.get(0)!!.message.content,
-                                chatId = response.id,
-                                promptToken = response.usage?.prompt_tokens!!,
-                                completionToken = response.usage.completion_tokens,
-                                status = "complete",
-                                lastUpdate = DateConverter().getFullDate()
+                        if (mChatContentLocalRepo?.isChatContent(it.chatRoomSrl, response.chatContentSrl) == false) {
+                            mChatContentLocalRepo?.insertContent(
+                                ChatContent(
+                                    chatContentSrl = 0,
+                                    chatRoomSrl = it.chatRoomSrl,
+                                    responseChatContentSrl = response.chatContentSrl,
+                                    role = "assistant",
+                                    content = response.choices?.get(0)!!.message.content,
+                                    chatId = response.id,
+                                    promptToken = response.usage?.prompt_tokens!!,
+                                    completionToken = response.usage.completion_tokens,
+                                    status = "complete",
+                                    lastUpdate = DateConverter().getFullDate()
+                                )
                             )
-                        )
+                        }
 
                     } else {
                         // 결과값 반환 실패
@@ -124,6 +134,12 @@ class ChatContentService : Service() {
                     }
                 }
         }
+
+        Timber.e("서비스 onCreate")
+    }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        return START_STICKY
     }
 
     override fun onBind(intent: Intent): IBinder? {
@@ -132,6 +148,6 @@ class ChatContentService : Service() {
 
     override fun onDestroy() {
         super.onDestroy()
-        Toast.makeText(this, "service done", Toast.LENGTH_SHORT).show()
+        Timber.e("서비스 종료")
     }
 }

@@ -7,12 +7,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kr.tmsoft.gptchat.data.remote.openai.CompletionRequest
-import kr.tmsoft.gptchat.data.remote.openai.OpenaiMessage
+import kr.tmsoft.gptchat.data.room.entity.ChatContent
 import kr.tmsoft.gptchat.repository.ChatContentLocalRepository
-import kr.tmsoft.gptchat.repository.ChatContentRemoteRepository
-import timber.log.Timber
+import kr.tmsoft.gptchat.util.DateConverter
 
+@Suppress("UNCHECKED_CAST")
 class ChatContentViewModelFactory(
     private val chatContentRepo: ChatContentLocalRepository
 ): ViewModelProvider.Factory {
@@ -38,14 +37,18 @@ class ChatContentViewModel(
     fun addWaitChatContent(message: String) {
         viewModelScope.launch(Dispatchers.IO) {
             chatContentRepo.insertContent(
-                0,
-                chatRoomSrl = chatRoomSrl.value!!,
-                responseChatContentSrl = null,
-                role = "user",
-                content = message,
-                chatId = null,
-                totalToken = null,
-                status = "wait"
+                ChatContent(
+                    0,
+                    chatRoomSrl = chatRoomSrl.value!!,
+                    responseChatContentSrl = null,
+                    role = "user",
+                    content = message,
+                    chatId = null,
+                    promptToken = null,
+                    completionToken = null,
+                    status = "wait",
+                    lastUpdate = DateConverter().getFullDate()
+                )
             )
         }
     }

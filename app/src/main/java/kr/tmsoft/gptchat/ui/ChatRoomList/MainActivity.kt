@@ -1,9 +1,9 @@
 package kr.tmsoft.gptchat.ui.ChatRoomList
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tnkfactory.ad.AdError
@@ -21,6 +21,7 @@ import kr.tmsoft.gptchat.ui.ChatContentRoom.ChatContentActivity
 import live.lafi.library_dialog.Dialog
 import timber.log.Timber
 
+
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
@@ -37,7 +38,9 @@ class MainActivity : AppCompatActivity() {
 
         val intent = Intent(applicationContext, ChatContentService::class.java)
         startService(intent)
+        Timber.e("데이터 : 서비스 실행")
     }
+
 
     override fun onStart() {
         super.onStart()
@@ -138,5 +141,9 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             .showEditTextDialog()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 }
