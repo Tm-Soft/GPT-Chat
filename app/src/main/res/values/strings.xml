@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">GPT-Chat</string>
+    <string name="chat_list_activity_title">AI 챗봇 목록</string>
+</resources>
