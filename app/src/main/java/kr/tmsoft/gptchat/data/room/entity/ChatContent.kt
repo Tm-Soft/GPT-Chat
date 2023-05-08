@@ -25,8 +25,11 @@ data class ChatContent(
     @ColumnInfo(name = "chat_id")
     val chatId: String?,
 
-    @ColumnInfo(name = "total_token")
-    val totalToken: Long?,
+    @ColumnInfo(name = "prompt_token")
+    val promptToken: Int?,
+
+    @ColumnInfo(name = "completion_token")
+    val completionToken: Int?,
 
     @ColumnInfo(name = "last_update")
     val lastUpdate: Long,

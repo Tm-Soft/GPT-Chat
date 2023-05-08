@@ -11,7 +11,7 @@ import kr.tmsoft.gptchat.data.room.entity.ChatRoom
 
 @Database(
     entities = [ChatRoom::class, ChatContent::class],
-    version = 3
+    version = 1
 )
 abstract class OpenAiDatabase: RoomDatabase() {
     abstract fun chatRoomDao(): ChatRoomDao
