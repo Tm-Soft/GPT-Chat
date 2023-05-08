@@ -2,14 +2,11 @@ package kr.tmsoft.gptchat.ui.ChatContentRoom
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
 import androidx.activity.OnBackPressedCallback
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import kr.tmsoft.gptchat.R
 import kr.tmsoft.gptchat.databinding.ActivityChatContentBinding
 import kr.tmsoft.gptchat.repository.ChatContentLocalRepository
-import kr.tmsoft.gptchat.repository.ChatContentRemoteRepository
 import timber.log.Timber
 
 class ChatContentActivity : AppCompatActivity() {
@@ -46,7 +43,7 @@ class ChatContentActivity : AppCompatActivity() {
         }
 
         viewModel.chatRoomSrl.observe(this) {
-            viewModel.addWaitChatContent("티앤케이 팩토리는 광고 플랫폼인데 다시한번 제대로 알려줘")
+            viewModel.addWaitChatContent("티앤케이팩토리에 대해서 설명 해줄래?")
         }
     }
 
