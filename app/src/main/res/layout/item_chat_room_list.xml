@@ -56,16 +56,19 @@
                 android:background="@drawable/chat_content_right_text"
                 android:padding="5dp"
                 android:layout_marginBottom="5dp"
-                android:maxLines="1"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:textColor="@color/black"
                 android:text="로또 번호 알려줄래? 아리까아리까아리까아리까아리까아리까아리까"/>
 
             <TextView
                 android:id="@+id/chat_room_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/gray_60"
+                android:textColor="@color/gray_40"
                 android:text="GPT 답장 내용"
-                android:maxLines="5"/>
+                android:maxLines="5"
+                android:ellipsize="end"/>
 
         </LinearLayout>
 

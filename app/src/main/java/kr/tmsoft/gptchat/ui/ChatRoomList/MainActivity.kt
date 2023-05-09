@@ -44,7 +44,6 @@ class MainActivity : AppCompatActivity() {
         Timber.e("데이터 : 서비스 실행")
     }
 
-
     override fun onStart() {
         super.onStart()
 
