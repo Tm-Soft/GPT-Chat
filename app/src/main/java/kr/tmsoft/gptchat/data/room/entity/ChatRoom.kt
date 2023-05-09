@@ -13,9 +13,6 @@ data class ChatRoom(
     @ColumnInfo(name = "chat_title")
     val chatTitle: String,
 
-    @ColumnInfo(name = "chat_last_content")
-    val chatContent: String,
-
     @ColumnInfo(name = "profile_uri")
     val profileUri: String?,
 

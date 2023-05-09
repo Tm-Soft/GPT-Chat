@@ -36,9 +36,15 @@ class ChatRoomListAdapter(
         val itemModel = getItem(position)
 
         itemModel.title.let { binding.chatRoomTitle.text = it }
-        itemModel.content.let { binding.chatRoomContent.text = it }
 
-        Timber.d("lastUpdate : ${itemModel.lastUpdate} // lastView : ${itemModel.lastViewDate}")
+        if (itemModel.question == null)
+            binding.textViewQuestion.visibility = View.GONE
+        else {
+            binding.textViewQuestion.visibility = View.VISIBLE
+            binding.textViewQuestion.text = itemModel.question
+        }
+
+        itemModel.content.let { binding.textViewContent.text = it }
 
         if (itemModel.lastViewDate == null
             || itemModel.lastUpdate > itemModel.lastViewDate) {

@@ -19,6 +19,12 @@ interface ChatContentDao {
     @Query("SELECT * FROM chat_content WHERE chat_room_srl = :chatRoomSrl AND role = 'assistant' AND chat_content_srl < :chatContentSrl ORDER BY response_chat_content_srl DESC")
     fun getAssistantContents(chatRoomSrl: Long, chatContentSrl: Long): List<ChatContent>
 
+    @Query("SELECT * FROM chat_content WHERE chat_room_srl = :chatRoomSrl AND role = 'assistant' ORDER BY response_chat_content_srl DESC LIMIT 1")
+    fun getAssistantLastContent(chatRoomSrl: Long): ChatContent
+
+    @Query("SELECT * FROM chat_content WHERE chat_content_srl = :contentSrl AND role = 'user' LIMIT 1")
+    fun getQuestionContent(contentSrl: Long): ChatContent
+
     @Query("SELECT * FROM chat_content WHERE chat_room_srl = :chatRoomSrl AND response_chat_content_srl = :chatContentSrl")
     fun isResponseChatContent(chatRoomSrl: Long, chatContentSrl: Long): Boolean
 

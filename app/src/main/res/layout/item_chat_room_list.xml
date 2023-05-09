@@ -51,6 +51,7 @@
 
 
             <TextView
+                android:id="@+id/textView_question"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/chat_content_right_text"
@@ -62,7 +63,7 @@
                 android:text="로또 번호 알려줄래? 아리까아리까아리까아리까아리까아리까아리까"/>
 
             <TextView
-                android:id="@+id/chat_room_content"
+                android:id="@+id/textView_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/gray_40"

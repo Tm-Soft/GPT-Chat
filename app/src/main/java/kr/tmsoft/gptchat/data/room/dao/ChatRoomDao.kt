@@ -17,11 +17,11 @@ interface ChatRoomDao {
     @Query("SELECT COUNT(*) FROM chat_room")
     fun getCount(): Int
 
-    @Query("UPDATE chat_room SET chat_last_content = :content, last_update = :date WHERE chatRoomSrl = :chatRoomSrl")
-    fun updateContent(chatRoomSrl: Long, content: String, date: Long)
+    @Query("UPDATE chat_room SET last_update = :date WHERE chatRoomSrl = :chatRoomSrl")
+    fun updateLastDate(chatRoomSrl: Long, date: Long)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(chatRoom: ChatRoom)
+    fun insert(chatRoom: ChatRoom): Long
 
     @Delete
     fun delete(chatRoom: ChatRoom)

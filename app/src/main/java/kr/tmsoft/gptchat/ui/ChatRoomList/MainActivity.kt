@@ -10,7 +10,10 @@ import com.tnkfactory.ad.AdError
 import com.tnkfactory.ad.AdItem
 import com.tnkfactory.ad.AdListener
 import com.tnkfactory.ad.InterstitialAdItem
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kr.tmsoft.gptchat.R
 import kr.tmsoft.gptchat.adapter.recycler.ChatRoomListAdapter
 import kr.tmsoft.gptchat.data.model.ChatRoomModel
@@ -53,18 +56,27 @@ class MainActivity : AppCompatActivity() {
             ChatRoomRepository(application)
         )
 
-        lifecycle.coroutineScope.launch {
-            viewModel.getChatRoomAllData().collect { itemModel ->
+        lifecycle.coroutineScope.launch(Dispatchers.IO) {
+            viewModel.getChatRoomAllData()
+                .filterNotNull()
+                .collect { itemModel ->
                 if (itemModel.isEmpty()) {
                     viewModel.addDefaultChatRoom()
                 } else {
                     val chatRoomList = ArrayList<ChatRoomModel>()
                     itemModel.forEach {
+                        // 받아온 chatRoomSrl
+                        val lastContentModel = viewModel.getChatLastContent(it.chatRoomSrl)
+                        var questionContent: String? = null
+                        if (lastContentModel.responseChatContentSrl != null)
+                            questionContent = viewModel.getQuestionContent(lastContentModel.responseChatContentSrl).content
+
                         chatRoomList.add(
                             ChatRoomModel(
                                 it.chatRoomSrl,
                                 it.chatTitle,
-                                it.chatContent,
+                                questionContent,
+                                lastContentModel.content,
                                 it.profileUri,
                                 it.lastViewDate,
                                 it.lastUpdate
@@ -72,7 +84,9 @@ class MainActivity : AppCompatActivity() {
                         )
                     }
 
-                    setAdapter(chatRoomList)
+                    withContext(Dispatchers.Main) {
+                        setAdapter(chatRoomList)
+                    }
                 }
             }
         }
