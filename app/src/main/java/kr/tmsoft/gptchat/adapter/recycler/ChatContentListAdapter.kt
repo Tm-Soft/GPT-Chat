@@ -51,13 +51,13 @@ class ChatContentListAdapter(
             is LeftTextViewHolder -> {
                 val binding = holder.binding
 
-                binding.textView.text = itemModel.content
+                binding.textViewTextContent.text = itemModel.content
             }
 
             is RightTextViewHolder -> {
                 val binding = holder.binding
 
-                binding.textView.text = itemModel.content
+                binding.textViewTextContent.text = itemModel.content
             }
         }
     }
