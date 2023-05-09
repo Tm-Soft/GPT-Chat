@@ -2,9 +2,14 @@ package kr.tmsoft.gptchat.ui.ChatContentRoom
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.LinearLayout
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import kr.tmsoft.gptchat.R
+import kr.tmsoft.gptchat.adapter.recycler.ChatContentListAdapter
+import kr.tmsoft.gptchat.data.model.ChatContentModel
 import kr.tmsoft.gptchat.databinding.ActivityChatContentBinding
 import kr.tmsoft.gptchat.repository.ChatContentLocalRepository
 import timber.log.Timber
@@ -22,6 +27,8 @@ class ChatContentActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChatContentBinding
 
     private lateinit var viewModel: ChatContentViewModel
+
+    private var mChatContentAdapter: ChatContentListAdapter? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,9 +49,43 @@ class ChatContentActivity : AppCompatActivity() {
             Timber.e("데이터 전달된게 없어.")
         }
 
-        viewModel.chatRoomSrl.observe(this) {
-            viewModel.addWaitChatContent("티앤케이팩토리에 대해서 설명 해줄래?")
+
+        binding.layoutBtnSend.setOnClickListener {
+            val msg = binding.editTextMessage.text.toString()
+            viewModel.addWaitChatContent(msg)
+            binding.editTextMessage.text = null
         }
+
+        setChatContentAdapter()
+    }
+
+    private fun setChatContentAdapter() {
+        if (mChatContentAdapter == null) {
+            mChatContentAdapter = ChatContentListAdapter()
+
+            binding.recyclerChatContent.apply {
+                adapter = mChatContentAdapter
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            }
+        }
+
+
+        val data = listOf(
+            ChatContentModel(
+                1,
+                "assistant",
+                "안녕하세요 무엇을 도와드릴까요?",
+                null
+            ),
+            ChatContentModel(
+                2,
+                "user",
+                "넛지 헬스케어에 대해서 알려줄래?",
+                null
+            )
+        )
+
+        mChatContentAdapter?.submitList(data)
     }
 
 }

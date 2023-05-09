@@ -17,17 +17,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GPTChat"
         tools:targetApi="31">
+
         <service
             android:name=".service.ChatContentService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
         <activity
             android:name=".ui.ChatContentRoom.ChatContentActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
+
         <activity
             android:name=".ui.ChatRoomList.MainActivity"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

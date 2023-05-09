@@ -65,14 +65,14 @@ class ChatRoomListAdapter(
                 oldItem: ChatRoomModel,
                 newItem: ChatRoomModel
             ): Boolean {
-                return oldItem == newItem
+                return oldItem.chatRoomSrl == newItem.chatRoomSrl
             }
 
             override fun areContentsTheSame(
                 oldItem: ChatRoomModel,
                 newItem: ChatRoomModel
             ): Boolean {
-                return oldItem.chatRoomSrl == newItem.chatRoomSrl
+                return oldItem == newItem
             }
 
         }

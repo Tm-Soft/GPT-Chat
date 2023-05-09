@@ -13,7 +13,7 @@ import kr.tmsoft.gptchat.util.DateConverter
 class ChatRoomViewModel(
     val chatRoomRepo: ChatRoomRepository
 ): ViewModel() {
-    fun getChatRoomAllData(): Flow<List<ChatRoom>> = chatRoomRepo.getAllChatRoom()
+    suspend fun getChatRoomAllData(): Flow<List<ChatRoom>> = chatRoomRepo.getAllChatRoom()
 
     private fun insertChatRoomData(chatRoom: ChatRoom) {
         viewModelScope.launch(Dispatchers.Default) {

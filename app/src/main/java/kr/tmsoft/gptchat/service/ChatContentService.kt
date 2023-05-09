@@ -11,14 +11,17 @@ import kotlinx.coroutines.launch
 import kr.tmsoft.gptchat.data.remote.openai.CompletionRequest
 import kr.tmsoft.gptchat.data.remote.openai.OpenaiMessage
 import kr.tmsoft.gptchat.data.room.entity.ChatContent
+import kr.tmsoft.gptchat.data.room.entity.ChatRoom
 import kr.tmsoft.gptchat.repository.ChatContentLocalRepository
 import kr.tmsoft.gptchat.repository.ChatContentRemoteRepository
+import kr.tmsoft.gptchat.repository.ChatRoomRepository
 import kr.tmsoft.gptchat.util.DateConverter
 import timber.log.Timber
 
 class ChatContentService : Service() {
     private var mChatContentLocalRepo: ChatContentLocalRepository? = null
     private var mChatContentRemoteRepo: ChatContentRemoteRepository? = null
+    private var mChatRoomLocalRepo: ChatRoomRepository? = null
 
 
     //TODO
@@ -33,6 +36,7 @@ class ChatContentService : Service() {
 
         mChatContentLocalRepo = ChatContentLocalRepository(application)
         mChatContentRemoteRepo = ChatContentRemoteRepository()
+        mChatRoomLocalRepo = ChatRoomRepository(application)
 
         GlobalScope.launch(Dispatchers.IO) {
             /*
@@ -113,6 +117,12 @@ class ChatContentService : Service() {
                                 )
                             )
                         }
+
+                        // ChatRoom 에도 데이터 업데이트 하기.
+                        mChatRoomLocalRepo?.updateContent(
+                            chatRoomSrl = it.chatRoomSrl,
+                            content = response.choices?.get(0)!!.message.content
+                        )
 
                     } else {
                         // 결과값 반환 실패
