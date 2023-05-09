@@ -33,11 +33,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        
+        // Timber 초기화 작업.
         Timber.plant(Timber.DebugTree())
-
-        val intent = Intent(applicationContext, ChatContentService::class.java)
-        startService(intent)
+        
+        // 서버 통신 서비스 실행
+        startService(
+            Intent(applicationContext, ChatContentService::class.java)
+        )
         Timber.e("데이터 : 서비스 실행")
     }
 
@@ -145,5 +148,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+
+        stopService(
+            Intent(applicationContext, ChatContentService::class.java)
+        )
     }
 }

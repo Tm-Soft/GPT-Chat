@@ -5,4 +5,5 @@
     <color name="transparent">#00FFFFFF</color>
 
     <color name="chat_count_icon_red">#FB3535</color>
+    <color name="chat_my_color">#66387DF7</color>
 </resources>

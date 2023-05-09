@@ -21,7 +21,6 @@
             android:layout_height="wrap_content"
             android:maxWidth="220dp"
             android:background="?attr/selectableItemBackground"
-            android:maxLines="30"
             android:paddingStart="15dp"
             android:paddingEnd="15dp"
             android:paddingTop="10dp"
