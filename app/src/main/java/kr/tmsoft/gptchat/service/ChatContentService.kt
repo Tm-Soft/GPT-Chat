@@ -11,7 +11,6 @@ import kotlinx.coroutines.launch
 import kr.tmsoft.gptchat.data.remote.openai.CompletionRequest
 import kr.tmsoft.gptchat.data.remote.openai.OpenaiMessage
 import kr.tmsoft.gptchat.data.room.entity.ChatContent
-import kr.tmsoft.gptchat.data.room.entity.ChatRoom
 import kr.tmsoft.gptchat.repository.ChatContentLocalRepository
 import kr.tmsoft.gptchat.repository.ChatContentRemoteRepository
 import kr.tmsoft.gptchat.repository.ChatRoomRepository
