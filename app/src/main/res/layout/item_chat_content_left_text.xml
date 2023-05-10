@@ -54,7 +54,7 @@
                     android:id="@+id/textView_text_content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:maxWidth="220dp"
+                    android:maxWidth="300dp"
                     android:background="?attr/selectableItemBackground"
                     android:maxLines="30"
                     android:paddingStart="15dp"

@@ -74,13 +74,13 @@ class ChatContentActivity : AppCompatActivity() {
             ChatContentModel(
                 1,
                 "assistant",
-                "안녕하세요 무엇을 도와드릴까요?",
+                "안녕하세요. 저는 당신의 AI 비서 입니다.\n무엇을 도와드릴까요?",
                 null
             ),
             ChatContentModel(
                 2,
                 "user",
-                "넛지 헬스케어에 대해서 알려줄래?",
+                "Tnk Factory에 대해서 알려줄래?",
                 null
             )
         )
