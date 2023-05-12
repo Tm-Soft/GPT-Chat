@@ -5,16 +5,17 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
-
-        maven { url "https://jitpack.io" }
-        maven { url "https://repository.tnkad.net:8443/repository/public/" }
     }
 }
+
 rootProject.name = "GPT-Chat"
-include ':app'
-include ':tmDialog'
+include(
+    ":app",
+    ":tmDialog"
+)
