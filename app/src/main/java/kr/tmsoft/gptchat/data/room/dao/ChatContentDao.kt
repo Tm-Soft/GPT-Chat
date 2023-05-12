@@ -16,6 +16,9 @@ interface ChatContentDao {
     @Query("SELECT * FROM chat_content WHERE status = 'wait' ORDER BY last_update ASC LIMIT 1")
     fun getWaitContent(): Flow<ChatContent>
 
+    @Query("SELECT * FROM chat_content WHERE chat_room_srl = :chatRoomSrl ORDER BY chat_content_srl DESC")
+    fun getChatContentList(chatRoomSrl: Long): Flow<List<ChatContent>>
+
     @Query("SELECT * FROM chat_content WHERE chat_room_srl = :chatRoomSrl AND role = 'assistant' AND chat_content_srl < :chatContentSrl ORDER BY response_chat_content_srl DESC")
     fun getAssistantContents(chatRoomSrl: Long, chatContentSrl: Long): List<ChatContent>
 
@@ -30,6 +33,10 @@ interface ChatContentDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(chatContent: ChatContent)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(chatContentList: List<ChatContent>)
+
 
     @Delete
     fun delete(chatContent: ChatContent)

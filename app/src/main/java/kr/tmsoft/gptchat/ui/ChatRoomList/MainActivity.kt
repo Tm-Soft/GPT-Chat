@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         startService(
             Intent(applicationContext, ChatContentService::class.java)
         )
-        Timber.e("데이터 : 서비스 실행")
+        Timber.e("activityCall : onCreate")
     }
 
     override fun onStart() {
@@ -66,6 +66,7 @@ class MainActivity : AppCompatActivity() {
                     val chatRoomList = ArrayList<ChatRoomModel>()
                     itemModel.forEach {
                         // 받아온 chatRoomSrl
+                        Timber.e("데이터 체크 : ${it.chatRoomSrl}")
                         val lastContentModel = viewModel.getChatLastContent(it.chatRoomSrl)
                         var questionContent: String? = null
                         if (lastContentModel.responseChatContentSrl != null)
@@ -165,5 +166,7 @@ class MainActivity : AppCompatActivity() {
         stopService(
             Intent(applicationContext, ChatContentService::class.java)
         )
+
+        Timber.e("activityCall : onDestroy")
     }
 }

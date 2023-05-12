@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import kr.tmsoft.gptchat.data.model.ChatContentModel
 import kr.tmsoft.gptchat.data.room.entity.ChatContent
 import kr.tmsoft.gptchat.repository.ChatContentLocalRepository
 import kr.tmsoft.gptchat.util.DateConverter
@@ -30,10 +32,20 @@ class ChatContentViewModel(
     private val _chatRoomSrl = MutableLiveData<Long>()
     val chatRoomSrl: LiveData<Long> = _chatRoomSrl
 
+    private val _chatContentList = MutableLiveData<List<ChatContentModel>>()
+    val chatContentList: LiveData<List<ChatContentModel>> = _chatContentList
+
     fun setChatRoomSrl(srl: Long) {
         _chatRoomSrl.postValue(srl)
     }
 
+    fun setChatContentList(list: List<ChatContentModel>) {
+        _chatContentList.postValue(list)
+    }
+
+    fun getChatContentList(): Flow<List<ChatContent>> {
+        return chatContentRepo.getChatContentList(chatRoomSrl.value!!)
+    }
     fun addWaitChatContent(message: String) {
         viewModelScope.launch(Dispatchers.IO) {
             chatContentRepo.insertContent(

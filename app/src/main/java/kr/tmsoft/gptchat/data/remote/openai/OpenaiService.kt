@@ -5,6 +5,6 @@ import kr.tmsoft.gptchat.data.remote.RetrofitClient
 object OpenaiService {
     private const val baseUrl = "https://api.openai.com"
     var client = RetrofitClient()
-        .defaultRetrofit(baseUrl, "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")
+        .defaultRetrofit(baseUrl, "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")
         .create(OpenaiAPI::class.java)
 }

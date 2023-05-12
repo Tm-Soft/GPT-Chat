@@ -84,7 +84,8 @@ class ChatContentService : Service() {
                         // 결과값 반환 성공.
 
                         // 반환이 성공 된 질문(role:user)의 status :: complete 로 update
-                        mChatContentLocalRepo?.insertContent(
+                        val insertContentList = ArrayList<ChatContent>()
+                        insertContentList.add(
                             ChatContent(
                                 chatContentSrl = response.chatContentSrl,
                                 chatRoomSrl = it.chatRoomSrl,
@@ -101,7 +102,7 @@ class ChatContentService : Service() {
 
                         // 반환 받은 Content :: Insert
                         if (mChatContentLocalRepo?.isChatContent(it.chatRoomSrl, response.chatContentSrl) == false) {
-                            mChatContentLocalRepo?.insertContent(
+                            insertContentList.add(
                                 ChatContent(
                                     chatContentSrl = 0,
                                     chatRoomSrl = it.chatRoomSrl,
@@ -116,6 +117,10 @@ class ChatContentService : Service() {
                                 )
                             )
                         }
+
+                        mChatContentLocalRepo?.insertAllContent(
+                            insertContentList
+                        )
 
                         // ChatRoom 에도 데이터 업데이트 하기.
                         mChatRoomLocalRepo?.updateContent(

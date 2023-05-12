@@ -11,25 +11,36 @@ class ChatContentLocalRepository(application: Application) {
     private val chatContentDao: ChatContentDao = openAiDatabase.chatContentDao()
 
 
-    suspend fun getWaitContentSingle(): Flow<ChatContent> = chatContentDao.getWaitContent()
+    fun getWaitContentSingle(): Flow<ChatContent> = chatContentDao.getWaitContent()
 
-    suspend fun getAssistantContent(
+    fun getChatContentList(
+        chatRoomSrl: Long
+    ) = chatContentDao.getChatContentList(chatRoomSrl)
+
+    fun getAssistantContent(
         chatRoomSrl: Long,
         chatContentSrl: Long
     ) = chatContentDao.getAssistantContents(chatRoomSrl, chatContentSrl)
 
-    suspend fun isChatContent(
+    fun isChatContent(
         chatRoomSrl: Long,
         chatContentSrl: Long
     ) = chatContentDao.isResponseChatContent(chatRoomSrl, chatContentSrl)
 
 
-    suspend fun insertContent(
+    fun insertContent(
         data: ChatContent
     ) {
         try {
             chatContentDao.insert(data)
         } catch (_: Exception) { }
+    }
 
+    fun insertAllContent(
+        data: List<ChatContent>
+    ) {
+        try {
+            chatContentDao.insertAll(data)
+        } catch (_: Exception) { }
     }
 }
