@@ -52,7 +52,7 @@ object Dep {
     }
 
     object TnkFactory {
-        const val core = "com.tnkfactory:pub:7.21.7"
+        const val core = "com.tnkfactory:rwd:8.02.14"
     }
 
     object Timber {

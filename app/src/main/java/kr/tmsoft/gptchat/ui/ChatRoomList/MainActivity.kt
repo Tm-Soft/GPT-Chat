@@ -6,10 +6,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.tnkfactory.ad.AdError
-import com.tnkfactory.ad.AdItem
-import com.tnkfactory.ad.AdListener
-import com.tnkfactory.ad.InterstitialAdItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
@@ -50,7 +46,7 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        binding.bannerAdView.load()
+        //binding.bannerAdView.load()
 
         viewModel = ChatRoomViewModel(
             ChatRoomRepository(application)
@@ -116,33 +112,34 @@ class MainActivity : AppCompatActivity() {
 
     private fun initUiEvent() {
         binding.layoutChatListAdd.setOnClickListener {
-            showFullScreenAD()
+            //showFullScreenAD()
+            showAddChatRoomDialog()
         }
     }
 
-    private fun showFullScreenAD() {
-        InterstitialAdItem(
-            this,
-            "TEST_INTERSTITIAL_V",
-            object: AdListener() {
-                override fun onError(p0: AdItem?, p1: AdError?) {
-                    super.onError(p0, p1)
-                    showAddChatRoomDialog()
-                }
-
-                override fun onClose(p0: AdItem?, p1: Int) {
-                    super.onClose(p0, p1)
-                    showAddChatRoomDialog()
-                }
-
-                override fun onLoad(p0: AdItem?) {
-                    p0?.show()
-                    super.onLoad(p0)
-                    binding.recyclerChatList.smoothScrollToPosition(0)
-                }
-            }
-        ).load()
-    }
+//    private fun showFullScreenAD() {
+//        InterstitialAdItem(
+//            this,
+//            "TEST_INTERSTITIAL_V",
+//            object: AdListener() {
+//                override fun onError(p0: AdItem?, p1: AdError?) {
+//                    super.onError(p0, p1)
+//                    showAddChatRoomDialog()
+//                }
+//
+//                override fun onClose(p0: AdItem?, p1: Int) {
+//                    super.onClose(p0, p1)
+//                    showAddChatRoomDialog()
+//                }
+//
+//                override fun onLoad(p0: AdItem?) {
+//                    p0?.show()
+//                    super.onLoad(p0)
+//                    binding.recyclerChatList.smoothScrollToPosition(0)
+//                }
+//            }
+//        ).load()
+//    }
 
     private fun showAddChatRoomDialog() {
         Dialog.with(this)

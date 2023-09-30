@@ -51,7 +51,7 @@ dependencies {
     androidTestImplementation(Dep.Test.junitExt)
     androidTestImplementation(Dep.Test.espressoCore)
 
-    implementation(Dep.TnkFactory.core)
+    //implementation(Dep.TnkFactory.core)
 
     implementation(Dep.Timber.core)
 
