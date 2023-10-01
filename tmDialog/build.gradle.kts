@@ -1,17 +1,11 @@
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     id("maven-publish")
 
     kotlin("android")
     kotlin("kapt")
     id("kotlin-parcelize")
 }
-
-kotlin {
-    jvmToolchain(17)
-}
-
-
 
 android {
     namespace = "live.lafi.tmdialog"
@@ -22,6 +16,15 @@ android {
         targetSdk = Version.targetSdk
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
     buildTypes {

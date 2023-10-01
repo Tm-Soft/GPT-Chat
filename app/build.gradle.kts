@@ -4,10 +4,6 @@ plugins {
     kotlin("kapt")
 }
 
-kotlin {
-    jvmToolchain(17)
-}
-
 android {
     namespace = "kr.tmsoft.gptchat"
     compileSdk = Version.compileSdk
@@ -20,6 +16,15 @@ android {
         versionName = Version.versionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
     buildTypes {
